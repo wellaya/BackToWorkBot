@@ -1,36 +1,36 @@
-﻿using CleanArchitecture.Application.Common.Interfaces;
-using CleanArchitecture.Domain.Entities;
+﻿using BackToWorkBot.Application.Common.Interfaces;
+using BackToWorkBot.Domain.Entities;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CleanArchitecture.Application.TodoLists.Commands.CreateTodoList
+namespace BackToWorkBot.Application.TodoLists.Commands.CreateTodoList
 {
     public partial class CreateTodoListCommand : IRequest<int>
     {
         public string Title { get; set; }
-    }
 
-    public class CreateTodoListCommandHandler : IRequestHandler<CreateTodoListCommand, int>
-    {
-        private readonly IApplicationDbContext _context;
-
-        public CreateTodoListCommandHandler(IApplicationDbContext context)
+        public class CreateTodoListCommandHandler : IRequestHandler<CreateTodoListCommand, int>
         {
-            _context = context;
-        }
+            private readonly IApplicationDbContext _context;
 
-        public async Task<int> Handle(CreateTodoListCommand request, CancellationToken cancellationToken)
-        {
-            var entity = new TodoList();
+            public CreateTodoListCommandHandler(IApplicationDbContext context)
+            {
+                _context = context;
+            }
 
-            entity.Title = request.Title;
+            public async Task<int> Handle(CreateTodoListCommand request, CancellationToken cancellationToken)
+            {
+                var entity = new TodoList();
 
-            _context.TodoLists.Add(entity);
+                entity.Title = request.Title;
 
-            await _context.SaveChangesAsync(cancellationToken);
+                _context.TodoLists.Add(entity);
 
-            return entity.Id;
+                await _context.SaveChangesAsync(cancellationToken);
+
+                return entity.Id;
+            }
         }
     }
 }

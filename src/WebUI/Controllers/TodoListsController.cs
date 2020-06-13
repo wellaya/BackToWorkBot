@@ -1,13 +1,13 @@
-﻿using CleanArchitecture.Application.TodoLists.Commands.CreateTodoList;
-using CleanArchitecture.Application.TodoLists.Commands.DeleteTodoList;
-using CleanArchitecture.Application.TodoLists.Commands.UpdateTodoList;
-using CleanArchitecture.Application.TodoLists.Queries.ExportTodos;
-using CleanArchitecture.Application.TodoLists.Queries.GetTodos;
+﻿using BackToWorkBot.Application.TodoLists.Commands.CreateTodoList;
+using BackToWorkBot.Application.TodoLists.Commands.DeleteTodoList;
+using BackToWorkBot.Application.TodoLists.Commands.UpdateTodoList;
+using BackToWorkBot.Application.TodoLists.Queries.ExportTodos;
+using BackToWorkBot.Application.TodoLists.Queries.GetTodos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-namespace CleanArchitecture.WebUI.Controllers
+namespace BackToWorkBot.WebUI.Controllers
 {
     [Authorize]
     public class TodoListsController : ApiController
@@ -27,13 +27,13 @@ namespace CleanArchitecture.WebUI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<int>> Create(CreateTodoListCommand command)
+        public async Task<ActionResult<long>> Create(CreateTodoListCommand command)
         {
             return await Mediator.Send(command);
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> Update(int id, UpdateTodoListCommand command)
+        public async Task<ActionResult> Update(long id, UpdateTodoListCommand command)
         {
             if (id != command.Id)
             {

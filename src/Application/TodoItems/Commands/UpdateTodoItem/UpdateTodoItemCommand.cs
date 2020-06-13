@@ -1,45 +1,45 @@
-﻿using CleanArchitecture.Application.Common.Exceptions;
-using CleanArchitecture.Application.Common.Interfaces;
-using CleanArchitecture.Domain.Entities;
+﻿using BackToWorkBot.Application.Common.Exceptions;
+using BackToWorkBot.Application.Common.Interfaces;
+using BackToWorkBot.Domain.Entities;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CleanArchitecture.Application.TodoItems.Commands.UpdateTodoItem
+namespace BackToWorkBot.Application.TodoItems.Commands.UpdateTodoItem
 {
     public partial class UpdateTodoItemCommand : IRequest
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         public string Title { get; set; }
 
         public bool Done { get; set; }
-    }
 
-    public class UpdateTodoItemCommandHandler : IRequestHandler<UpdateTodoItemCommand>
-    {
-        private readonly IApplicationDbContext _context;
-
-        public UpdateTodoItemCommandHandler(IApplicationDbContext context)
+        public class UpdateTodoItemCommandHandler : IRequestHandler<UpdateTodoItemCommand>
         {
-            _context = context;
-        }
+            private readonly IApplicationDbContext _context;
 
-        public async Task<Unit> Handle(UpdateTodoItemCommand request, CancellationToken cancellationToken)
-        {
-            var entity = await _context.TodoItems.FindAsync(request.Id);
-
-            if (entity == null)
+            public UpdateTodoItemCommandHandler(IApplicationDbContext context)
             {
-                throw new NotFoundException(nameof(TodoItem), request.Id);
+                _context = context;
             }
 
-            entity.Title = request.Title;
-            entity.Done = request.Done;
+            public async Task<Unit> Handle(UpdateTodoItemCommand request, CancellationToken cancellationToken)
+            {
+                var entity = await _context.TodoItems.FindAsync(request.Id);
 
-            await _context.SaveChangesAsync(cancellationToken);
+                if (entity == null)
+                {
+                    throw new NotFoundException(nameof(TodoItem), request.Id);
+                }
 
-            return Unit.Value;
+                entity.Title = request.Title;
+                entity.Done = request.Done;
+
+                await _context.SaveChangesAsync(cancellationToken);
+
+                return Unit.Value;
+            }
         }
     }
 }

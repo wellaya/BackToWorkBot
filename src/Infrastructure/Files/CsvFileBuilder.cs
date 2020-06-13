@@ -1,12 +1,11 @@
-﻿using CleanArchitecture.Application.Common.Interfaces;
-using CleanArchitecture.Application.TodoLists.Queries.ExportTodos;
-using CleanArchitecture.Infrastructure.Files.Maps;
+﻿using BackToWorkBot.Application.Common.Interfaces;
+using BackToWorkBot.Application.TodoLists.Queries.ExportTodos;
+using BackToWorkBot.Infrastructure.Files.Maps;
 using CsvHelper;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 
-namespace CleanArchitecture.Infrastructure.Files
+namespace BackToWorkBot.Infrastructure.Files
 {
     public class CsvFileBuilder : ICsvFileBuilder
     {
@@ -15,7 +14,7 @@ namespace CleanArchitecture.Infrastructure.Files
             using var memoryStream = new MemoryStream();
             using (var streamWriter = new StreamWriter(memoryStream))
             {
-                using var csvWriter = new CsvWriter(streamWriter, CultureInfo.InvariantCulture);
+                using var csvWriter = new CsvWriter(streamWriter);
 
                 csvWriter.Configuration.RegisterClassMap<TodoItemRecordMap>();
                 csvWriter.WriteRecords(records);

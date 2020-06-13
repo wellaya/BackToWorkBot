@@ -1,7 +1,7 @@
-﻿namespace CleanArchitecture.Application.Common.Interfaces
+﻿namespace BackToWorkBot.Application.Common.Interfaces
 {
     public interface ICurrentUserService
     {
-        string UserId { get; }
+        public string UserId { get; }
     }
 }

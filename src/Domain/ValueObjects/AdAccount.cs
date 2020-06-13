@@ -1,9 +1,9 @@
-﻿using CleanArchitecture.Domain.Common;
-using CleanArchitecture.Domain.Exceptions;
+﻿using BackToWorkBot.Domain.Common;
+using BackToWorkBot.Domain.Exceptions;
 using System;
 using System.Collections.Generic;
 
-namespace CleanArchitecture.Domain.ValueObjects
+namespace BackToWorkBot.Domain.ValueObjects
 {
     public class AdAccount : ValueObject
     {

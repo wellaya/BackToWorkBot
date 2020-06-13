@@ -1,7 +1,7 @@
-﻿using CleanArchitecture.Application.Common.Interfaces;
+﻿using BackToWorkBot.Application.Common.Interfaces;
 using System;
 
-namespace CleanArchitecture.Infrastructure.Services
+namespace BackToWorkBot.Infrastructure.Services
 {
     public class DateTimeService : IDateTime
     {

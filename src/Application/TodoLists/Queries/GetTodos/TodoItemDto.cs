@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
-using CleanArchitecture.Application.Common.Mappings;
-using CleanArchitecture.Domain.Entities;
+using BackToWorkBot.Application.Common.Mappings;
+using BackToWorkBot.Domain.Entities;
 
-namespace CleanArchitecture.Application.TodoLists.Queries.GetTodos
+namespace BackToWorkBot.Application.TodoLists.Queries.GetTodos
 {
     public class TodoItemDto : IMapFrom<TodoItem>
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         public int ListId { get; set; }
 

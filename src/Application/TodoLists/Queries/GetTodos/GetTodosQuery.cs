@@ -1,45 +1,38 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using CleanArchitecture.Application.Common.Interfaces;
-using CleanArchitecture.Domain.Enums;
+using BackToWorkBot.Application.Common.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CleanArchitecture.Application.TodoLists.Queries.GetTodos
+namespace BackToWorkBot.Application.TodoLists.Queries.GetTodos
 {
     public class GetTodosQuery : IRequest<TodosVm>
     {
-    }
-
-    public class GetTodosQueryHandler : IRequestHandler<GetTodosQuery, TodosVm>
-    {
-        private readonly IApplicationDbContext _context;
-        private readonly IMapper _mapper;
-
-        public GetTodosQueryHandler(IApplicationDbContext context, IMapper mapper)
+        public class GetTodosQueryHandler : IRequestHandler<GetTodosQuery, TodosVm>
         {
-            _context = context;
-            _mapper = mapper;
-        }
+            private readonly IApplicationDbContext _context;
+            private readonly IMapper _mapper;
 
-        public async Task<TodosVm> Handle(GetTodosQuery request, CancellationToken cancellationToken)
-        {
-            return new TodosVm
+            public GetTodosQueryHandler(IApplicationDbContext context, IMapper mapper)
             {
-                PriorityLevels = Enum.GetValues(typeof(PriorityLevel))
-                    .Cast<PriorityLevel>()
-                    .Select(p => new PriorityLevelDto { Value = (int)p, Name = p.ToString() })
-                    .ToList(),
+                _context = context;
+                _mapper = mapper;
+            }
 
-                Lists = await _context.TodoLists
+            public async Task<TodosVm> Handle(GetTodosQuery request, CancellationToken cancellationToken)
+            {
+                var vm = new TodosVm();
+
+                vm.Lists = await _context.TodoLists
                     .ProjectTo<TodoListDto>(_mapper.ConfigurationProvider)
                     .OrderBy(t => t.Title)
-                    .ToListAsync(cancellationToken)
-            };
+                    .ToListAsync(cancellationToken);
+
+                return vm;
+            }
         }
     }
 }

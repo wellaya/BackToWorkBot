@@ -1,8 +1,8 @@
-﻿using CleanArchitecture.Application.Common.Mappings;
-using CleanArchitecture.Domain.Entities;
+﻿using BackToWorkBot.Application.Common.Mappings;
+using BackToWorkBot.Domain.Entities;
 using System.Collections.Generic;
 
-namespace CleanArchitecture.Application.TodoLists.Queries.GetTodos
+namespace BackToWorkBot.Application.TodoLists.Queries.GetTodos
 {
     public class TodoListDto : IMapFrom<TodoList>
 {

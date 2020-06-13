@@ -1,11 +1,11 @@
-﻿using CleanArchitecture.Application.Common.Interfaces;
+﻿using BackToWorkBot.Application.Common.Interfaces;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CleanArchitecture.Application.TodoLists.Commands.UpdateTodoList
+namespace BackToWorkBot.Application.TodoLists.Commands.UpdateTodoList
 {
     public class UpdateTodoListCommandValidator : AbstractValidator<UpdateTodoListCommand>
     {
@@ -18,7 +18,7 @@ namespace CleanArchitecture.Application.TodoLists.Commands.UpdateTodoList
             RuleFor(v => v.Title)
                 .NotEmpty().WithMessage("Title is required.")
                 .MaximumLength(200).WithMessage("Title must not exceed 200 characters.")
-                .MustAsync(BeUniqueTitle).WithMessage("The specified title already exists.");
+                .MustAsync(BeUniqueTitle).WithMessage("The specified title is already exists.");
         }
 
         public async Task<bool> BeUniqueTitle(UpdateTodoListCommand model, string title, CancellationToken cancellationToken)

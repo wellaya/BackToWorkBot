@@ -1,7 +1,7 @@
-﻿using CleanArchitecture.Application.Common.Models;
+﻿using BackToWorkBot.Application.Common.Models;
 using System.Threading.Tasks;
 
-namespace CleanArchitecture.Application.Common.Interfaces
+namespace BackToWorkBot.Application
 {
     public interface IIdentityService
     {

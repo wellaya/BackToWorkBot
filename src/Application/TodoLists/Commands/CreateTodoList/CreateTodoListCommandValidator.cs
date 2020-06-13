@@ -1,10 +1,10 @@
-﻿using CleanArchitecture.Application.Common.Interfaces;
+﻿using BackToWorkBot.Application.Common.Interfaces;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CleanArchitecture.Application.TodoLists.Commands.CreateTodoList
+namespace BackToWorkBot.Application.TodoLists.Commands.CreateTodoList
 {
     public class CreateTodoListCommandValidator : AbstractValidator<CreateTodoListCommand>
     {

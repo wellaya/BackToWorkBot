@@ -1,9 +1,9 @@
-﻿using CleanArchitecture.Domain.Entities;
+﻿using BackToWorkBot.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CleanArchitecture.Application.Common.Interfaces
+namespace BackToWorkBot.Application.Common.Interfaces
 {
     public interface IApplicationDbContext
     {

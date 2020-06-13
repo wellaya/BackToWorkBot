@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace CleanArchitecture.Domain.Common
+namespace BackToWorkBot.Domain.Common
 {
-    public abstract class AuditableEntity
+    public class AuditableEntity
     {
         public string CreatedBy { get; set; }
 

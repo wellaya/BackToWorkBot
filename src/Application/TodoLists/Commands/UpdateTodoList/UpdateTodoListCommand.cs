@@ -1,42 +1,42 @@
-﻿using CleanArchitecture.Application.Common.Exceptions;
-using CleanArchitecture.Application.Common.Interfaces;
-using CleanArchitecture.Domain.Entities;
+﻿using BackToWorkBot.Application.Common.Exceptions;
+using BackToWorkBot.Application.Common.Interfaces;
+using BackToWorkBot.Domain.Entities;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CleanArchitecture.Application.TodoLists.Commands.UpdateTodoList
+namespace BackToWorkBot.Application.TodoLists.Commands.UpdateTodoList
 {
     public class UpdateTodoListCommand : IRequest
     {
         public int Id { get; set; }
 
         public string Title { get; set; }
-    }
 
-    public class UpdateTodoListCommandHandler : IRequestHandler<UpdateTodoListCommand>
-    {
-        private readonly IApplicationDbContext _context;
-
-        public UpdateTodoListCommandHandler(IApplicationDbContext context)
+        public class UpdateTodoListCommandHandler : IRequestHandler<UpdateTodoListCommand>
         {
-            _context = context;
-        }
+            private readonly IApplicationDbContext _context;
 
-        public async Task<Unit> Handle(UpdateTodoListCommand request, CancellationToken cancellationToken)
-        {
-            var entity = await _context.TodoLists.FindAsync(request.Id);
-
-            if (entity == null)
+            public UpdateTodoListCommandHandler(IApplicationDbContext context)
             {
-                throw new NotFoundException(nameof(TodoList), request.Id);
+                _context = context;
             }
 
-            entity.Title = request.Title;
+            public async Task<Unit> Handle(UpdateTodoListCommand request, CancellationToken cancellationToken)
+            {
+                var entity = await _context.TodoLists.FindAsync(request.Id);
 
-            await _context.SaveChangesAsync(cancellationToken);
+                if (entity == null)
+                {
+                    throw new NotFoundException(nameof(TodoList), request.Id);
+                }
 
-            return Unit.Value;
+                entity.Title = request.Title;
+
+                await _context.SaveChangesAsync(cancellationToken);
+
+                return Unit.Value;
+            }
         }
     }
 }

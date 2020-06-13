@@ -1,7 +1,7 @@
-﻿using CleanArchitecture.Domain.Common;
+﻿using BackToWorkBot.Domain.Common;
 using System.Collections.Generic;
 
-namespace CleanArchitecture.Domain.Entities
+namespace BackToWorkBot.Domain.Entities
 {
     public class TodoList : AuditableEntity
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace CleanArchitecture.Application.Common.Models
+namespace BackToWorkBot.Application.Common.Models
 {
     public class Result
     {

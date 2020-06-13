@@ -1,11 +1,11 @@
-﻿using CleanArchitecture.Application.Common.Interfaces;
-using CleanArchitecture.Application.Common.Models;
+﻿using BackToWorkBot.Application;
+using BackToWorkBot.Application.Common.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CleanArchitecture.Infrastructure.Identity
+namespace BackToWorkBot.Infrastructure.Identity
 {
     public class IdentityService : IIdentityService
     {

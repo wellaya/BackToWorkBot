@@ -3,31 +3,34 @@ using System.Collections.Generic;
 using System.Linq;
 using FluentValidation.Results;
 
-namespace CleanArchitecture.Application.Common.Exceptions
+namespace BackToWorkBot.Application.Common.Exceptions
 {
     public class ValidationException : Exception
     {
         public ValidationException()
             : base("One or more validation failures have occurred.")
         {
-            Errors = new Dictionary<string, string[]>();
+            Failures = new Dictionary<string, string[]>();
         }
 
-        public ValidationException(IEnumerable<ValidationFailure> failures)
+        public ValidationException(List<ValidationFailure> failures)
             : this()
         {
-            var failureGroups = failures
-                .GroupBy(e => e.PropertyName, e => e.ErrorMessage);
+            var propertyNames = failures
+                .Select(e => e.PropertyName)
+                .Distinct();
 
-            foreach (var failureGroup in failureGroups)
+            foreach (var propertyName in propertyNames)
             {
-                var propertyName = failureGroup.Key;
-                var propertyFailures = failureGroup.ToArray();
+                var propertyFailures = failures
+                    .Where(e => e.PropertyName == propertyName)
+                    .Select(e => e.ErrorMessage)
+                    .ToArray();
 
-                Errors.Add(propertyName, propertyFailures);
+                Failures.Add(propertyName, propertyFailures);
             }
         }
 
-        public IDictionary<string, string[]> Errors { get; }
+        public IDictionary<string, string[]> Failures { get; }
     }
 }

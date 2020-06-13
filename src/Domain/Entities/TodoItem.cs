@@ -1,12 +1,12 @@
-﻿using CleanArchitecture.Domain.Common;
-using CleanArchitecture.Domain.Enums;
+﻿using BackToWorkBot.Domain.Common;
+using BackToWorkBot.Domain.Enums;
 using System;
 
-namespace CleanArchitecture.Domain.Entities
+namespace BackToWorkBot.Domain.Entities
 {
     public class TodoItem : AuditableEntity
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         public int ListId { get; set; }
 

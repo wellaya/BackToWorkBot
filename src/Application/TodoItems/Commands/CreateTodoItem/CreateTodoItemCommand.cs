@@ -1,41 +1,41 @@
-﻿using CleanArchitecture.Application.Common.Interfaces;
-using CleanArchitecture.Domain.Entities;
+﻿using BackToWorkBot.Application.Common.Interfaces;
+using BackToWorkBot.Domain.Entities;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CleanArchitecture.Application.TodoItems.Commands.CreateTodoItem
+namespace BackToWorkBot.Application.TodoItems.Commands.CreateTodoItem
 {
-    public class CreateTodoItemCommand : IRequest<int>
+    public class CreateTodoItemCommand : IRequest<long>
     {
         public int ListId { get; set; }
 
         public string Title { get; set; }
-    }
 
-    public class CreateTodoItemCommandHandler : IRequestHandler<CreateTodoItemCommand, int>
-    {
-        private readonly IApplicationDbContext _context;
-
-        public CreateTodoItemCommandHandler(IApplicationDbContext context)
+        public class CreateTodoItemCommandHandler : IRequestHandler<CreateTodoItemCommand, long>
         {
-            _context = context;
-        }
+            private readonly IApplicationDbContext _context;
 
-        public async Task<int> Handle(CreateTodoItemCommand request, CancellationToken cancellationToken)
-        {
-            var entity = new TodoItem
+            public CreateTodoItemCommandHandler(IApplicationDbContext context)
             {
-                ListId = request.ListId,
-                Title = request.Title,
-                Done = false
-            };
+                _context = context;
+            }
 
-            _context.TodoItems.Add(entity);
+            public async Task<long> Handle(CreateTodoItemCommand request, CancellationToken cancellationToken)
+            {
+                var entity = new TodoItem
+                {
+                    ListId = request.ListId,
+                    Title = request.Title,
+                    Done = false
+                };
 
-            await _context.SaveChangesAsync(cancellationToken);
+                _context.TodoItems.Add(entity);
 
-            return entity.Id;
+                await _context.SaveChangesAsync(cancellationToken);
+
+                return entity.Id;
+            }
         }
     }
 }

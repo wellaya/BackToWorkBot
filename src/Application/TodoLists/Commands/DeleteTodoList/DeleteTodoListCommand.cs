@@ -1,44 +1,44 @@
-﻿using CleanArchitecture.Application.Common.Exceptions;
-using CleanArchitecture.Application.Common.Interfaces;
-using CleanArchitecture.Domain.Entities;
+﻿using BackToWorkBot.Application.Common.Exceptions;
+using BackToWorkBot.Application.Common.Interfaces;
+using BackToWorkBot.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CleanArchitecture.Application.TodoLists.Commands.DeleteTodoList
+namespace BackToWorkBot.Application.TodoLists.Commands.DeleteTodoList
 {
     public class DeleteTodoListCommand : IRequest
     {
         public int Id { get; set; }
-    }
 
-    public class DeleteTodoListCommandHandler : IRequestHandler<DeleteTodoListCommand>
-    {
-        private readonly IApplicationDbContext _context;
-
-        public DeleteTodoListCommandHandler(IApplicationDbContext context)
+        public class DeleteTodoListCommandHandler : IRequestHandler<DeleteTodoListCommand>
         {
-            _context = context;
-        }
+            private readonly IApplicationDbContext _context;
 
-        public async Task<Unit> Handle(DeleteTodoListCommand request, CancellationToken cancellationToken)
-        {
-            var entity = await _context.TodoLists
-                .Where(l => l.Id == request.Id)
-                .SingleOrDefaultAsync(cancellationToken);
-
-            if (entity == null)
+            public DeleteTodoListCommandHandler(IApplicationDbContext context)
             {
-                throw new NotFoundException(nameof(TodoList), request.Id);
+                _context = context;
             }
 
-            _context.TodoLists.Remove(entity);
+            public async Task<Unit> Handle(DeleteTodoListCommand request, CancellationToken cancellationToken)
+            {
+                var entity = await _context.TodoLists
+                    .Where(l => l.Id == request.Id)
+                    .SingleOrDefaultAsync(cancellationToken);
 
-            await _context.SaveChangesAsync(cancellationToken);
+                if (entity == null)
+                {
+                    throw new NotFoundException(nameof(TodoList), request.Id);
+                }
 
-            return Unit.Value;
+                _context.TodoLists.Remove(entity);
+
+                await _context.SaveChangesAsync(cancellationToken);
+
+                return Unit.Value;
+            }
         }
     }
 }
